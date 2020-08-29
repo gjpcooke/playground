@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<h1 id="inbuiltjavascriptgreeting"></h1>
+<h1 id="jquerygreeting"></h1>
+<div id="app">
+    <h1>{{vuegreeting}}</h1>
+</div>
+<script>
+    document.getElementById('inbuiltjavascriptgreeting').innerText = 'Hello from Vanilla/Inbuilt Javascript';
+</script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+<script>
+    $('#jquerygreeting').text('Hello from jquery!');
+</script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            vuegreeting: 'Hello from Vue javascript!',
+        }
+    })
+</script>
+
