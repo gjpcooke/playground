@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+
+
+<div id="app">
+<h1>Testing with embedded component</h1>
+    <div class="container">
+        <my-firstembeddedcomponent></my-firstembeddedcomponent>
+        <br>
+        <h2>Now Repeat 1,000 Times</h2>
+        <my-firstembeddedcomponent v-for="i in 1000"></my-firstembeddedcomponent>
+    </div>
+    
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    Vue.component('my-firstembeddedcomponent', {
+        template: '<strong>This Truely is embedded</strong>'
+    });
+    
+    var vm = new Vue({
+        el: '#app'
+    })
+</script>

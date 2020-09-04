@@ -7,16 +7,56 @@
     [v-cloak] {
         display: none;
     }
+    .highlight {
+        border: solid 3px red;
+        color: red;
+    }
+    .shooting-star-leave-to, .shooting-star-enter {
+        transform: translateX(150px) rotate(30deg);
+        opacity: 0;
+    }
+    .shooting-star-enter-active, .shooting-star-leave-active {
+        transition: all .3s ease;
+    }
+    .neo-list-leave-to, .neo-list-enter {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    .neo-list-enter-active, .neo-list-leave-active {
+        transition: all .2s linear;
+    }
+    .spin-enter-active {
+        animation: spn-steps 2s;
+    }
+    @keyframes  spn-steps {
+        0% {
+            transform: scale(1) rotate(0);
+        }
+        50% {
+            transform: scale(10) rotate(360deg);
+        }
+        100% {
+            transform: scale(1) rotate(1080deg);
+        }
 </style>
-
 <div id="app">
-    <div class="container">
+        <div class="container">
         <div class="card mt-5">
-            <h2 class="card-header">Near Earth Objects</h2>
-            <div class="m-3" v-cloak v-if="numasteroids > 0">
-                <p>Showing {{numasteroids}} items</p>
+            <h2 class="card-header">Near Earth 
+                <transition name="spin" appear>
+                    <span style="display:inline-block">Objects</span>
+                </transition>
+            </h2>
+            <transition name="shooting-star">
+                <div class="m-3" v-cloak v-if="numasteroids > 0 && showSummary">
+                    <p>Showing {{numasteroids}} items</p>
+                    <h1>Gary Cooke Practice</h1>
+                </div>
+            </transition>
+            <div class="m-3">
+                <a href="#" @click="showSummary = !showSummary">Show/hide Summary</a>
             </div>
-            <table class="table">
+            <table class="table table-striped">
                 <thead class="thead-light">
                     <th>No.</th>
                     <th>Name</th>
@@ -24,8 +64,10 @@
                     <th>Miss Distance</th>
                     <th>Remove</th>
                 </thead>
-                <tbody v-cloak>
-                    <tr v-for="(a, index) in asteroids" :key="a.neo_reference_id">
+                <!-- <tbody v-cloak> -->
+                    <tbody is="transition-group"name="neo-list" v-cloak>
+                    <!-- <tr v-for="(a, index) in asteroids" :key="a.neo_reference_id" :style="getRowStyle(a)" style="color: green"> -->
+                    <tr v-for="(a, index) in asteroids" :key="a.neo_reference_id" :class="{highlight: isMissingData(a)}">
                         <td>{{index + 1}}</td>
                         <td>{{a.name}}</td>
                         <td>{{getCloseaAproachDate(a)}}</td>
@@ -39,6 +81,7 @@
                         <td><button @click="remove(index)" class="btn btn-warning">Remove</button></td>
                     </tr>
                 </tbody>
+                </tbody>
             </table>
         </div>
     </div>
@@ -50,7 +93,8 @@
     var vm = new Vue({
         el: '#app',
         data: {
-            asteroids: []
+            asteroids: [],
+            showSummary: true
         },
         created: function () {
             this.fetchAsteroids();
@@ -77,6 +121,17 @@
             },
             remove: function (index){
                 this.asteroids.splice(index,1);
+            },
+            getRowStyle: function(a){
+                if (a.close_approach_data == 0){
+                    return {
+                        border: 'solid 3px red',
+                        color: 'red'
+                    }
+                }
+            },
+            isMissingData: function(a){
+                return a.close_approach_data.length == 0;
             } 
         }
     });    
