@@ -3,16 +3,35 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
 <div id="app">
-    <h1>Template with bootstrap and Vue.js references - Edit this file</h1>
+    <!-- <h1>Template with bootstrap and Vue.js references - Edit this file</h1> -->
     <div class="container">
-
+            <another-component></another-component>
+            <my-component v-for="i in 20"></my-component>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script>
+    
+    var anotherComponent = {
+        data: function(){
+            return {
+                msg: 'Hello from another component!'
+            }
+        },
+        template: '<h1>{{msg}}</h1>'
+    }
+    
+    Vue.component('my-component', {
+        template: '<strong>A static element...</strong>'
+    })
+
+
     var vm = new Vue({
-        el: '#app'
+        el: '#app',
+        components: {
+            'another-component': anotherComponent
+        }
     });
 </script>
 
